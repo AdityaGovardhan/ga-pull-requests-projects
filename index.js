@@ -18,7 +18,7 @@ async function github_query(github_token, query, variables) {
 // most @actions toolkit packages have async methods
 async function run() {
   try { 
-    const issue = core.getInput('issue');
+    const pull_request = core.getInput('pull_request');
     const repository = core.getInput('repository');
     const github_token = core.getInput('github_token');
 
@@ -42,34 +42,34 @@ async function run() {
     query = `
     query($owner:String!, $name:String!, $number:Int!){
       repository(owner: $owner, name: $name) {
-        issue(number:$number) {
+        pullRequest(number:$number) {
           id
         }
       }
     }`;
-    variables = { owner: repository.split("/")[0], name: repository.split("/")[1], number: parseInt(issue) };
+    variables = { owner: repository.split("/")[0], name: repository.split("/")[1], number: parseInt(pull_request) };
 
     response = await github_query(github_token, query, variables);
     console.log(response);
-    const issueId = response['data']['repository']['issue']['id'];
+    const pullRequestId = response['data']['repository']['pullRequest']['id'];
 
-    console.log(`Adding issue ${issue} to ${project['name']}`);
+    console.log(`Adding Pull Request ${pull_request} to ${project['name']}`);
     console.log("");
 
     query = `
-    mutation($issueId:ID!, $projectId:ID!) {
-      updateIssue(input:{id:$issueId, projectIds:[$projectId]}) {
-        issue {
+    mutation($pullRequestId:ID!, $projectId:ID!) {
+      updatePullRequest(input:{pullRequestId:$pullRequestId, projectIds:[$projectId]}) {
+        pullRequest {
           id
         }
       }
     }`;
-    variables = { issueId, projectId: project['id'] };
+    variables = { pullRequestId, projectId: project['id'] };
 
     response = await github_query(github_token, query, variables);
     console.log(response);
     console.log(`Done!`)
-  } 
+  }
   catch (error) {
     core.setFailed(error.message);
   }

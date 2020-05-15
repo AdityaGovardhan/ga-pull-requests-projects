@@ -1,16 +1,18 @@
 # Add pull request to project
 
-A javascript github action to add an pull request to the first project on the repository.
+A javascript github action to add a pull request to the first project on the repository.
 
 NOTE: If you have more than one project, this might not work.
 
 # Usage
 
 ```yaml
-name: 'Add new pull request to project board'
+name: 'add new pull request to project board'
 
 on:
   pull_request:
+    branches:
+    - master
     types:
     - opened
  
@@ -25,3 +27,8 @@ jobs:
         pull_request: ${{ github.event.pull_request.number }}
 
 ```
+References:
+
+[github javascript action tutorial](https://help.github.com/en/actions/building-actions/creating-a-javascript-action)
+
+[secrets github token](https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token)

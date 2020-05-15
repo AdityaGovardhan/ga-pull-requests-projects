@@ -1,4 +1,0 @@
-
-test('merge branches', async() => {
-    
-});

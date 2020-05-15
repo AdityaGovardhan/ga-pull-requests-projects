@@ -1,14 +1,17 @@
-name: 'Add to Project'
-description: 'Add an issue to the first project on the repo'
+name: 'add new pull request to project board'
+description: 'Add a pull request to the first project on the repo'
+branding:
+  icon: 'git-pull-request'
+  color: 'gray-dark'
 inputs:
-  issue:
-    description: 'issue number, use {{ github.event.issue.number }}'
+  github_token:
+    description: 'GitHub token, use {{ secrets.GITHUB_TOKEN }}'
     required: true
   repository:
     description: 'repository path, use {{ github.repository }}'
     required: true
-  github_token:
-    description: 'GitHub token, use {{ secrets.GITHUB_TOKEN }}'
+  pull_request:
+    description: 'pull request number, use {{ github.event.pull_request.number }}'
     required: true
 runs:
   using: 'node12'
