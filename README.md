@@ -1,16 +1,16 @@
-# Add issue to project
+# Add pull request to project
 
-A javascript github action to add an issue to the first project on the repository.
+A javascript github action to add an pull request to the first project on the repository.
 
 NOTE: If you have more than one project, this might not work.
 
 # Usage
 
 ```yaml
-name: 'Add new issue to project board'
+name: 'Add new pull request to project board'
 
 on:
-  issues:
+  pull_request:
     types:
     - opened
  
@@ -22,6 +22,6 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         repository: ${{ github.repository }}
-        issue: ${{ github.event.pull_request.number }}
+        pull_request: ${{ github.event.pull_request.number }}
 
 ```
